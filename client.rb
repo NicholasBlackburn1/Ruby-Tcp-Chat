@@ -1,35 +1,12 @@
 
 require "socket"
-class Client
-  def initialize( server )
-    @server = server
-    @request = nil
-    @response = nil
-    listen
-    send
-    @request.join
-    @response.join
-  end
 
-  def listen
-    @response = Thread.new do
-      loop {
-        msg = @server.gets.chomp
-        puts "#{msg}"
-      }
-    end
-  end
+socket = TCPSocket.open("localhost", 3000)
 
-  def send
-    puts "Enter the username:"
-    @request = Thread.new do
-      loop {
-        msg = $stdin.gets.chomp
-        @server.puts( msg )
-      }
-    end
-  end
+puts "Starting the Client..................."
+while message = socket.gets             # Read lines from the socket
+   puts message.chomp
 end
 
-server = TCPSocket.open( "localhost", 3000 )
-Client.new( server )
+puts "Closing the Client..................."
+socket.close                    # Close the socket
