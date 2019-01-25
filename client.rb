@@ -1,7 +1,7 @@
 
 require "socket"
 require 'socket'
-
+require "colorize"
 class Client
    def initialize(socket)
       @socket = socket
@@ -13,7 +13,7 @@ class Client
    end
 
    def send_request
-      puts "Please enter your username to establish a connection..."
+      puts "Please enter your username to establish a connection...".yellow
       begin
          Thread.new do
             loop do
@@ -34,7 +34,7 @@ class Client
          Thread.new do
             loop do
                response = @socket.gets.chomp
-               puts "#{response}"
+               puts "#{response}".blue
                if response.eql?'quit'
                   @socket.close
                end
